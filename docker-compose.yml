@@ -1,0 +1,101 @@
+version: '3.8'
+
+services:
+
+  # Web Server Service
+  nginx_proto_2:
+    image: nginx
+    container_name: nginx_proto_2
+    ports:
+      - "8003:8003"
+      - "8004:8004"
+    volumes:
+      - ./src:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ./nginx/sites-available/:/etc/nginx/sites-available/
+    depends_on:
+      - app_proto_2
+      - mysql_proto_2A
+      - mysql_proto_2B
+    networks:
+      - net_proto_2
+
+  #Database Service
+  mysql_proto_2A:
+    image : mysql
+    container_name : mysql_proto_2A
+    volumes:
+      - ./mysql/data_2A:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: dikosongkan
+    networks:
+      - net_proto_2
+
+  mysql_proto_2B:
+    image : mysql
+    container_name : mysql_proto_2B
+    volumes:
+      - ./mysql/data_2B:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: dikosongkan
+    networks:
+      - net_proto_2
+  
+  app_proto_2:
+    container_name: app_proto_2
+    build: 
+      context: ./php
+      dockerfile: Dockerfile
+    volumes:
+      - ./src:/var/www
+    working_dir: /var/www
+    networks:
+      - net_proto_2
+
+  # Adminer Service
+  adminer_proto_2:
+    image: adminer
+    container_name: adminer_proto_2
+    ports:
+      - "8082:8080"
+    depends_on:
+      - mysql_proto_2A
+      - mysql_proto_2B
+    networks:
+      - net_proto_2
+
+  # micro integrator  
+  wso2mi_proto_2:
+    image: wso2/wso2mi:4.0.0-ubuntu
+    container_name: wso2mi_proto_2
+    # ports:
+    #   - "8290:8290"
+    #   - "8253:8253"
+    #   - "5005:5005"
+    volumes:
+      - ./wso2mi/carbonapps:/home/wso2carbon/wso2mi-4.0.0/repository/deployment/server/carbonapps
+    networks:
+      - net_proto_2
+  
+  # Message Broker Service
+  rabbitmq_proto_2:
+    image: rabbitmq:3-management
+    container_name: rabbitmq_proto_2
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    environment:
+      RABBITMQ_DEFAULT_USER: user_proto_2
+      RABBITMQ_DEFAULT_PASS: password_proto_2
+    networks:
+      - net_proto_2
+  
+# Network Service
+networks:
+  net_proto_2:
+    driver: "bridge"
+#   host:
+#     ipam:
+#       driver: default
+#       config:
+#         - subnet: 172.30.0.0/16
