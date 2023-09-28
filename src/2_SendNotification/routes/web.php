@@ -23,8 +23,4 @@ Route::get('/', [SendEmail::class, 'formEmail']);
 Route::get('/formemail', [SendEmail::class, 'formEmail']);
 Route::post('/sendemail', [SendEmail::class, 'sendEmail']);
 
-
-
-Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
