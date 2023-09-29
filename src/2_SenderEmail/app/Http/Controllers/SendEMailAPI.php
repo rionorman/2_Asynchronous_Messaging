@@ -10,7 +10,7 @@ class SendEmailAPI extends Controller
 {
 	public function formEmail()
 	{
-		return view('email.formemail');
+		return view('email.formemail');ff
 	}
 
 	public function sendEmail(Request $request)
