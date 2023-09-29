@@ -23,8 +23,8 @@ class SendEmail extends Controller
 	public function sendEmail(Request $request)
 	{
 		$response = Http::post(
-			// 'http://nginx:8004/api/sendemail',
-			env('MIN_URL').'/broadcastemail/sendemail',
+			'http://nginx_proto_2:8004/api/sendemail',
+			// env('MIN_URL').'/broadcastemail/sendemail',
 			[
 				'email' => $request->email,
 				'subject' => $request->subject,
