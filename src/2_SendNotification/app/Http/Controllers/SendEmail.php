@@ -31,7 +31,7 @@ class SendEmail extends Controller
 				'content' => $request->content
 			]
 		);
-		// dd($response->body(), true);
+		dd($response->body(), true);
 		$data = json_decode($response->body(), true);
 		return redirect("/formemail")->with(['message' => $data['message']]);
 		// return redirect("/formemail")->with(['message' => 'Data Terkirim']);
