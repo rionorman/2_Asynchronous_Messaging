@@ -68,10 +68,6 @@ services:
   wso2mi_proto_2:
     image: wso2/wso2mi:4.0.0-ubuntu
     container_name: wso2mi_proto_2
-    # ports:
-    #   - "8290:8290"
-    #   - "8253:8253"
-    #   - "5005:5005"
     volumes:
       - ./wso2mi/carbonapps:/home/wso2carbon/wso2mi-4.0.0/repository/deployment/server/carbonapps
     networks:
@@ -94,8 +90,3 @@ services:
 networks:
   net_proto_2:
     driver: "bridge"
-#   host:
-#     ipam:
-#       driver: default
-#       config:
-#         - subnet: 172.30.0.0/16
