@@ -17,7 +17,7 @@ use App\Http\Controllers\SendEmail;
 |
 */
 
-Route::get('/home', [SendEmail::class, 'formEmail']);
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/formemail', [SendEmail::class, 'formEmail']);
 Route::post('/sendemail', [SendEmail::class, 'sendEmail']);
